@@ -18,6 +18,7 @@ To use Quantic ETL, you'll need:
 
 * Visual Studio 2015, or 2013 with at least update 4
 * .NET 4.5 or higher
+* Copy of [Quantic.Common](https://github.com/aevitas/Quantic.Common)
 
 # License
 Quantic ETL is licensed under the [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0). Dependencies may be licensed independently. Please respect all licenses.
