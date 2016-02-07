@@ -21,3 +21,6 @@ To use Quantic ETL, you'll need:
 
 # License
 Quantic ETL is licensed under the [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0). Dependencies may be licensed independently. Please respect all licenses.
+
+# Acknowledgements
+This library is very loosely inspired by [Ayende's Rhino ETL](https://github.com/ayende/rhino-etl). 
