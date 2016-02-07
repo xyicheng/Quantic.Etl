@@ -1,0 +1,3 @@
+[submodule "contrib/Quantic.Common"]
+	path = contrib/Quantic.Common
+	url = https://github.com/aevitas/Quantic.Common.git
