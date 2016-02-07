@@ -12,7 +12,20 @@ namespace Quantic.Etl
     public class Row : IEquatable<Row>
     {
         // Key contains the name of the column, value contains the value.
-        private readonly Dictionary<string, object> _columns = new Dictionary<string, object>();
+        private readonly Dictionary<string, object> _columns =
+            new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
+
+        public Row(IEnumerable<KeyValuePair<string, object>> values)
+        {
+            foreach (var v in values)
+                _columns.Add(v.Key, v.Value);
+        }
+
+        public Row(IDictionary<string, object> values) : this(values.ToList())
+        { }
+
+        public Row()
+        { }
 
         /// <summary>
         ///     Gets the columns for this <see cref="Row" />
@@ -35,7 +48,7 @@ namespace Quantic.Etl
 
             // This should definitely not be using != for equality comparison: implement EqualityComparer<T> here somehow.
             // Second, check for equality in all the column values.
-            if (_columns.Any(c => other._columns[c.Key] != c.Value))
+            if (_columns.Any(c => !other._columns[c.Key].Equals(c.Value)))
                 return false;
 
             return true;
@@ -43,28 +56,31 @@ namespace Quantic.Etl
 
         #endregion
 
-        private void FromObjectInternal(object obj, BindingFlags bindingFlags)
+        private static Row FromObjectInternal(object obj, BindingFlags bindingFlags)
         {
-            var properties = obj.GetType().GetProperties(bindingFlags);
-            var fields = obj.GetType().GetFields(bindingFlags);
+            var row = new Row();
+            var properties = obj.GetType().GetProperties();
+            var fields = obj.GetType().GetFields();
 
             foreach (var p in properties)
             {
-                if (_columns.ContainsKey(p.Name))
+                if (row._columns.ContainsKey(p.Name))
                     throw new InvalidOperationException(
                         "Row objects can't be initialized more than once - are you sure this Row wasn't initialized previously?");
 
-                _columns.Add(p.Name, p.GetValue(obj));
+                row._columns.Add(p.Name, p.GetValue(obj));
             }
 
             foreach (var f in fields)
             {
-                if (_columns.ContainsKey(f.Name))
+                if (row._columns.ContainsKey(f.Name))
                     throw new InvalidOperationException(
                         "Row objects can't be initialized more than once - are you sure this Row wasn't initialized previously?");
 
-                _columns.Add(f.Name, f.GetValue(obj));
+                row._columns.Add(f.Name, f.GetValue(obj));
             }
+
+            return row;
         }
 
         /// <summary>
@@ -74,12 +90,15 @@ namespace Quantic.Etl
         /// <param name="transformation">The transformation.</param>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException">Neither parameters may be null (or empty).</exception>
-        public Row TransformColumn(string column, Action<object> transformation)
+        public Row TransformColumn<T>(string column, Func<T, T> transformation)
         {
             Requires.NotNullOrEmpty(column, nameof(column));
             Requires.NotNull(transformation, nameof(transformation));
 
-            transformation(_columns[column]);
+            var obj = (T) _columns[column];
+            var newVal = transformation(obj);
+
+            _columns[column] = newVal;
 
             return this;
         }
@@ -136,59 +155,66 @@ namespace Quantic.Etl
         }
 
         /// <summary>
+        ///     Gets the value of the specified column, if the column exists.
+        /// </summary>
+        /// <param name="column">The column.</param>
+        /// <returns></returns>
+        public object Get(string column)
+        {
+            Requires.NotNullOrEmpty(column, nameof(column));
+
+            if (!_columns.ContainsKey(column))
+                throw new KeyNotFoundException("Column " + column + " does not exist in this row!");
+
+            return _columns[column];
+        }
+
+        /// <summary>
         ///     Initializes this <see cref="Row" /> from the specified object, obtaining its columns and values from its properties
         ///     and fields.
         /// </summary>
         /// <param name="obj">The object.</param>
         /// <param name="bindingFlags">The binding flags.</param>
-        public void FromObject(object obj, BindingFlags bindingFlags = BindingFlags.Default)
+        public static Row FromObject(object obj, BindingFlags bindingFlags = BindingFlags.Default)
         {
             Requires.NotNull(obj, nameof(obj));
 
-            FromObjectInternal(obj, bindingFlags);
+            return FromObjectInternal(obj, bindingFlags);
         }
 
         /// <summary>
-        ///     Applies the current row to a new object of the specified type. This method will return true if all columns and their
-        ///     values could be successfully mapped to an object of the specified type, and false if it couldn't.
+        /// Applies the current row to a new object of the specified type.
+        /// The out parameter will be set to true if the entire object had all its properties and fields properly set, otherwise false.
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="obj">The object.</param>
-        /// <returns>True if all columns and their values could be mapped to the specified object, otherwise false.</returns>
-        /// <exception cref="MissingMethodException">
-        ///     In the .NET for Windows Store apps or the Portable Class Library, catch the
-        ///     base class exception, <see cref="T:System.MissingMemberException" />, instead.The type that is specified for
-        ///     <paramref name="T" /> does not have a parameterless constructor.
-        /// </exception>
-        /// <exception cref="TargetException">
-        ///     In the .NET for Windows Store apps or the Portable Class Library, catch
-        ///     <see cref="T:System.Exception" /> instead.The type of <paramref name="obj" /> does not match the target type, or a
-        ///     property is an instance property but <paramref name="obj" /> is null.
-        /// </exception>
-        /// <exception cref="MethodAccessException">
-        ///     In the .NET for Windows Store apps or the Portable Class Library, catch the
-        ///     base class exception, <see cref="T:System.MemberAccessException" />, instead. There was an illegal attempt to
-        ///     access a private or protected method inside a class.
-        /// </exception>
-        /// <exception cref="TargetInvocationException">
-        ///     An error occurred while setting the property value. The
-        ///     <see cref="P:System.Exception.InnerException" /> property indicates the reason for the error.
-        /// </exception>
-        /// <exception cref="FieldAccessException">
-        ///     In the .NET for Windows Store apps or the Portable Class Library, catch the base
-        ///     class exception, <see cref="T:System.MemberAccessException" />, instead.The caller does not have permission to
-        ///     access this field.
-        /// </exception>
-        public bool ToObject<T>(out T obj)
+        /// <param name="success">if set to <c>true</c> [success].</param>
+        /// <returns>
+        /// True if all columns and their values could be mapped to the specified object, otherwise false.
+        /// </returns>
+        /// <exception cref="MissingMethodException">In the .NET for Windows Store apps or the Portable Class Library, catch the
+        /// base class exception, <see cref="T:System.MissingMemberException" />, instead.The type that is specified for
+        /// <paramref name="T" /> does not have a parameterless constructor.</exception>
+        /// <exception cref="TargetException">In the .NET for Windows Store apps or the Portable Class Library, catch
+        /// <see cref="T:System.Exception" /> instead.The type of <paramref name="obj" /> does not match the target type, or a
+        /// property is an instance property but <paramref name="obj" /> is null.</exception>
+        /// <exception cref="MethodAccessException">In the .NET for Windows Store apps or the Portable Class Library, catch the
+        /// base class exception, <see cref="T:System.MemberAccessException" />, instead. There was an illegal attempt to
+        /// access a private or protected method inside a class.</exception>
+        /// <exception cref="TargetInvocationException">An error occurred while setting the property value. The
+        /// <see cref="P:System.Exception.InnerException" /> property indicates the reason for the error.</exception>
+        /// <exception cref="FieldAccessException">In the .NET for Windows Store apps or the Portable Class Library, catch the base
+        /// class exception, <see cref="T:System.MemberAccessException" />, instead.The caller does not have permission to
+        /// access this field.</exception>
+        public T ToObject<T>(out bool success)
         {
-            obj = Activator.CreateInstance<T>();
-            var completeSuccess = true;
+            var obj = Activator.CreateInstance<T>();
+            bool s = true;
 
             foreach (var p in obj.GetType().GetProperties())
             {
                 if (!_columns.ContainsKey(p.Name) || !p.CanWrite)
                 {
-                    completeSuccess = false;
+                    s = false;
                     continue;
                 }
 
@@ -199,14 +225,21 @@ namespace Quantic.Etl
             {
                 if (!_columns.ContainsKey(f.Name))
                 {
-                    completeSuccess = false;
+                    s = false;
                     continue;
                 }
 
                 f.SetValue(obj, _columns[f.Name]);
             }
 
-            return completeSuccess;
+            success = s;
+            return obj;
+        }
+
+        public T ToObject<T>()
+        {
+            bool b;
+            return ToObject<T>(out b);
         }
     }
 }

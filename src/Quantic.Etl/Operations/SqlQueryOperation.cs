@@ -17,9 +17,8 @@ namespace Quantic.Etl.Operations
     /// <typeparam name="T"></typeparam>
     public class SqlQueryOperation<T> : IOperation<IEnumerable<T>>
     {
-        private readonly ILog _log = Log.Get();
-
         private readonly IDbConnection _connection;
+        private readonly ILog _log = Log.Get();
         private readonly string _query;
 
         /// <summary>
