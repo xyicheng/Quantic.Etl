@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
 using Dapper;
+using log4net;
 using Quantic.Common;
 using Quantic.Etl.Abstractions;
 
@@ -16,6 +17,8 @@ namespace Quantic.Etl.Operations
     /// <typeparam name="T"></typeparam>
     public class SqlQueryOperation<T> : IOperation<IEnumerable<T>>
     {
+        private readonly ILog _log = Log.Get();
+
         private readonly IDbConnection _connection;
         private readonly string _query;
 
@@ -55,6 +58,8 @@ namespace Quantic.Etl.Operations
         /// <returns></returns>
         public async Task<IEnumerable<T>> Execute()
         {
+            _log.Debug("Executing query: " + _query);
+
             using (var con = _connection)
             {
                 con.Open();
