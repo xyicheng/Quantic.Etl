@@ -36,6 +36,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
   </ItemGroup>
@@ -53,10 +57,13 @@
   </Choose>
   <ItemGroup>
     <Compile Include="DatabaseTests.cs" />
+    <Compile Include="ReadTextFileOperationTests.cs" />
     <Compile Include="PipelineTests.cs" />
     <Compile Include="RowTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestRecords.cs" />
     <Compile Include="TransformationsTests.cs" />
+    <Compile Include="WriteTextFileOperationTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\contrib\Quantic.Common\src\Quantic.Common\Quantic.Common.csproj">
@@ -67,6 +74,9 @@
       <Project>{660fae4b-b8b7-4eb1-969c-8d6d4ee71a2c}</Project>
       <Name>Quantic.Etl</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

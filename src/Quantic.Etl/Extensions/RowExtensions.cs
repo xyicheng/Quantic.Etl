@@ -14,7 +14,7 @@ namespace Quantic.Etl.Extensions
         /// </summary>
         /// <param name="row">The row.</param>
         /// <returns></returns>
-        public static IDictionary<string, object> ToDictionary(this IRow row)
+        public static Dictionary<string, object> ToDictionary(this IRow row)
         {
             return row.Columns.ToDictionary(c => c, row.Get);
         }
