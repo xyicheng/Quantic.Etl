@@ -8,7 +8,7 @@ namespace Quantic.Etl.Abstractions
     public interface IOperation<T>
     {
         /// <summary>
-        ///     Executes this operation.
+        ///     Executes this operation and returns a value of type T.
         /// </summary>
         /// <returns></returns>
         Task<T> Execute();

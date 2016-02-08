@@ -93,7 +93,7 @@ namespace Quantic.Etl.Tests
         {
             var row = new Row(new Dictionary<string, object>() { { "Foo", 10 } });
 
-            row.TransformColumn<int>("Foo", o => o += 10);
+            row.Transform<int>("Foo", o => o += 10);
 
             Assert.AreEqual(20, row.Get("Foo"));
         }
@@ -103,7 +103,7 @@ namespace Quantic.Etl.Tests
         {
             var row = new Row(new Dictionary<string, object>() { { "Foo", "Bar" } });
 
-            row.TransformColumn<string>("Foo", o => o = "Lol");
+            row.Transform<string>("Foo", o => o = "Lol");
 
             Assert.AreEqual("Lol", row.Get("Foo"));
         }

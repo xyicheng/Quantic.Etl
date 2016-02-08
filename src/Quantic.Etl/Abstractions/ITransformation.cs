@@ -28,6 +28,6 @@ namespace Quantic.Etl.Abstractions
         ///     Applies the transformation from source type to the destination type.
         /// </summary>
         /// <returns></returns>
-        Task<TDest> Transform<TSource, TDest>(TSource source);
+        Task<object> Transform(object source);
     }
 }

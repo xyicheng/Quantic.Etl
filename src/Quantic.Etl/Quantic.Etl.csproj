@@ -51,9 +51,11 @@
   <ItemGroup>
     <Compile Include="Abstractions\IOperation.cs" />
     <Compile Include="Abstractions\IPipeline.cs" />
+    <Compile Include="Abstractions\IRow.cs" />
     <Compile Include="Abstractions\ITransformation.cs" />
     <Compile Include="Current.cs" />
     <Compile Include="Database.cs" />
+    <Compile Include="Extensions\RowExtensions.cs" />
     <Compile Include="PipelineBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Operations\SqlQueryOperation.cs" />

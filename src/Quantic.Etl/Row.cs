@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Quantic.Common;
+using Quantic.Etl.Abstractions;
 
 namespace Quantic.Etl
 {
 	/// <summary>
 	///     Represents a row in a data table.
 	/// </summary>
-	public class Row : IEquatable<Row>
+	public class Row : IRow
 	{
 		// Key contains the name of the column, value contains the value.
 		private readonly Dictionary<string, object> _columns =
@@ -37,20 +38,20 @@ namespace Quantic.Etl
 		/// </value>
 		public IEnumerable<string> Columns => new List<string>(_columns.Keys);
 
-		#region Implementation of IEquatable<Row>
+		#region Implementation of IEquatable<IRow>
 
-		public bool Equals(Row other)
+		public bool Equals(IRow other)
 		{
 			if (other == null)
 				return false;
 
 			// Do all column names match?
-			if (!_columns.Keys.SequenceEqual(other._columns.Keys, EqualityComparer<string>.Default))
+			if (!_columns.Keys.SequenceEqual(other.Columns, EqualityComparer<string>.Default))
 				return false;
 
 			// This should definitely not be using != for equality comparison: implement EqualityComparer<T> here somehow.
 			// Second, check for equality in all the column values.
-			if (_columns.Any(c => !other._columns[c.Key].Equals(c.Value)))
+			if (_columns.Any(c => !other.Get(c.Key).Equals(c.Value)))
 				return false;
 
 			return true;
@@ -92,7 +93,7 @@ namespace Quantic.Etl
 		/// <param name="transformation">The transformation.</param>
 		/// <returns></returns>
 		/// <exception cref="ArgumentNullException">Neither parameters may be null (or empty).</exception>
-		public Row TransformColumn<T>(string column, Func<T, T> transformation)
+		public IRow Transform<T>(string column, Func<T, T> transformation)
 		{
 			Requires.NotNullOrEmpty(column, nameof(column));
 			Requires.NotNull(transformation, nameof(transformation));
@@ -112,7 +113,7 @@ namespace Quantic.Etl
 		/// <param name="value">The value.</param>
 		/// <returns></returns>
 		/// <exception cref="ArgumentNullException">Column can not be null.</exception>
-		public Row AddColumn(string column, object value)
+		public IRow AddColumn(string column, object value)
 		{
 			Requires.NotNull(column, nameof(column));
 
@@ -127,7 +128,7 @@ namespace Quantic.Etl
 		/// <param name="column">The column.</param>
 		/// <returns></returns>
 		/// <exception cref="ArgumentNullException">Column can not be null.</exception>
-		public Row RemoveColumn(string column)
+		public IRow RemoveColumn(string column)
 		{
 			Requires.NotNull(column, nameof(column));
 
@@ -143,7 +144,7 @@ namespace Quantic.Etl
 		/// <param name="value">The value.</param>
 		/// <returns></returns>
 		/// <exception cref="ArgumentException">Row doesn't contain the specified column.</exception>
-		public Row Set(string column, object value)
+		public IRow Set<T>(string column, T value)
 		{
 			Requires.NotNull(column, nameof(column));
 
