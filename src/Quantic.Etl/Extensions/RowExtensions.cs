@@ -5,7 +5,7 @@ using Quantic.Etl.Abstractions;
 namespace Quantic.Etl.Extensions
 {
     /// <summary>
-    /// Provides various extensions to the <see cref="Row"/> class.
+    /// Provides various extensions to the <see cref="IRow"/> interface.
     /// </summary>
     public static class RowExtensions
     {
