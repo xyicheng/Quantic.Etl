@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{660FAE4B-B8B7-4EB1-969C-8D6D4EE71A2C}</ProjectGuid>
+    <ProjectGuid>{CC101618-9CA2-40E3-80D1-0D7370113DD0}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Quantic.Etl</RootNamespace>
-    <AssemblyName>Quantic.Etl</AssemblyName>
+    <RootNamespace>Quantic.Common</RootNamespace>
+    <AssemblyName>Quantic.Common</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -31,16 +31,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Dapper, Version=1.40.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Dapper.1.42\lib\net45\Dapper.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="log4net, Version=1.2.15.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>..\packages\log4net.2.0.5\lib\net45-full\log4net.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -53,32 +45,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Abstractions\IOperation.cs" />
-    <Compile Include="Abstractions\IPipeline.cs" />
-    <Compile Include="Abstractions\IRow.cs" />
-    <Compile Include="Abstractions\ITransformation.cs" />
-    <Compile Include="Current.cs" />
-    <Compile Include="Database.cs" />
-    <Compile Include="Extensions\RowExtensions.cs" />
-    <Compile Include="Operations\ReadTextFileOperation.cs" />
-    <Compile Include="Operations\WriteTextFileOperation.cs" />
-    <Compile Include="PipelineBase.cs" />
+    <Compile Include="Annotations.cs" />
+    <Compile Include="Log.cs" />
+    <Compile Include="Maybe.cs" />
+    <Compile Include="Requires.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Operations\SqlQueryOperation.cs" />
-    <Compile Include="Row.cs" />
-    <Compile Include="TransformationForAttribute.cs" />
-    <Compile Include="Transformations.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config">
-      <SubType>Designer</SubType>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\Quantic.Common\src\Quantic.Common\Quantic.Common.csproj">
-      <Project>{cc101618-9ca2-40e3-80d1-0d7370113dd0}</Project>
-      <Name>Quantic.Common</Name>
-    </ProjectReference>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
