@@ -93,7 +93,12 @@ namespace Quantic.Etl.Tests
         {
             var row = new Row(new Dictionary<string, object>() { { "Foo", 10 } });
 
-            row.Transform<int>("Foo", o => o += 10);
+	        row.Transform(r =>
+	        {
+				r["Foo"] = 20;
+
+				return r;
+	        });
 
             Assert.AreEqual(20, row.Get("Foo"));
         }
@@ -103,10 +108,33 @@ namespace Quantic.Etl.Tests
         {
             var row = new Row(new Dictionary<string, object>() { { "Foo", "Bar" } });
 
-            row.Transform<string>("Foo", o => o = "Lol");
+	        row.Transform(r =>
+	        {
+				r["Foo"] = "Lol";
 
-            Assert.AreEqual("Lol", row.Get("Foo"));
+				return r;
+	        });
+
+            Assert.AreEqual("Lol", row["Foo"]);
         }
+
+		[TestMethod]
+	    public void Row_Fluent_BuildAndTransform()
+	    {
+		    var row = new Row();
+
+			row.AddColumn("Name", "John").AddColumn("Age", 25).AddColumn("IsDead", false).Transform(r =>
+			{
+				r["Age"] = 60;
+				r["IsDead"] = true;
+
+				return r;
+			}).RenameColumn("Name", "FirstName");
+
+			Assert.AreEqual(60, row["Age"]);
+			Assert.AreEqual(true, row["IsDead"]);
+			Assert.AreEqual("John", row["FirstName"]);
+	    }
 
         [TestMethod]
         public void Row_Set_ValueIsSet()

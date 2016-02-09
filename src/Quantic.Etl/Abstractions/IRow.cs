@@ -18,6 +18,16 @@ namespace Quantic.Etl.Abstractions
 		IEnumerable<string> Columns { get; }
 
 		/// <summary>
+		///     Gets or sets the <see cref="System.Object" /> at the specified column.
+		/// </summary>
+		/// <value>
+		///     The <see cref="System.Object" />.
+		/// </value>
+		/// <param name="column">The column.</param>
+		/// <returns></returns>
+		object this[string column] { get; set; }
+
+		/// <summary>
 		///     Adds a column with the specified name, and optionally the specified value.
 		/// </summary>
 		/// <param name="column">The column.</param>
@@ -33,6 +43,14 @@ namespace Quantic.Etl.Abstractions
 		IRow RemoveColumn(string column);
 
 		/// <summary>
+		///     Renames the specified column to the specified new name, retaining its value.
+		/// </summary>
+		/// <param name="oldName">The old name.</param>
+		/// <param name="newName">The new name.</param>
+		/// <returns></returns>
+		IRow RenameColumn(string oldName, string newName);
+
+		/// <summary>
 		///     Sets the specified column to the specified value.
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
@@ -42,13 +60,11 @@ namespace Quantic.Etl.Abstractions
 		IRow Set<T>(string column, T value);
 
 		/// <summary>
-		///     Transforms the specified column using the specified transformation func.
+		///     Applies the specified transformation to the current row.
 		/// </summary>
-		/// <typeparam name="T"></typeparam>
-		/// <param name="column">The column.</param>
 		/// <param name="transformFunc">The transform function.</param>
 		/// <returns></returns>
-		IRow Transform<T>(string column, Func<T, T> transformFunc);
+		IRow Transform(Func<IRow, IRow> transformFunc);
 
 		/// <summary>
 		///     Gets the value of the specified column.
