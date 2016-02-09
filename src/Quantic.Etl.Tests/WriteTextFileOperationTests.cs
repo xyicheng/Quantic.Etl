@@ -11,17 +11,5 @@ namespace Quantic.Etl.Tests
     {
         private static string _fileLocation = Path.Combine(
 			Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "QuanticTestWrite.txt");
-
-		[TestMethod]
-        public async Task WriteTextFileOperation_Execute_WritesToFile()
-        {
-            string text = "Foo";
-
-            var op = new WriteTextFileOperation(_fileLocation, text);
-
-            await op.Execute();
-
-            Assert.IsTrue(File.Exists(_fileLocation));
-        }
     }
 }

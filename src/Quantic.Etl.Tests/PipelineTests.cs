@@ -15,20 +15,7 @@ namespace Quantic.Etl.Tests
 
             Assert.IsTrue(pipeline.IsRunning);
         }
-
-        [TestMethod]
-        public async Task Pipeline_Start_ProcessRuns()
-        {
-            // This is a horrible test, please kill me for it.
-            var pipeline = new TestPipeline();
-
-            pipeline.Start();
-
-            await Task.Delay(500);
-
-            Assert.AreEqual(10, pipeline.Number);
-        }
-
+		
         [TestMethod]
         public async Task Pipeline_Stop_StopsRunning()
         {
