@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{660FAE4B-B8B7-4EB1-969C-8D6D4EE71A2C}</ProjectGuid>
+    <ProjectGuid>{6C9C09FE-3165-437B-9911-65A3A5F2B16F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Quantic.Etl</RootNamespace>
-    <AssemblyName>Quantic.Etl</AssemblyName>
+    <RootNamespace>Quantic.Common</RootNamespace>
+    <AssemblyName>Quantic.Common</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -31,10 +31,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Dapper, Version=1.40.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Dapper.1.42\lib\net45\Dapper.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="log4net, Version=1.2.15.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>..\packages\log4net.2.0.5\lib\net45-full\log4net.dll</HintPath>
       <Private>True</Private>
@@ -53,32 +49,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Abstractions\IOperation.cs" />
-    <Compile Include="Abstractions\IPipeline.cs" />
-    <Compile Include="Abstractions\IRow.cs" />
-    <Compile Include="Abstractions\ITransformation.cs" />
-    <Compile Include="Current.cs" />
-    <Compile Include="Database.cs" />
-    <Compile Include="Extensions\RowExtensions.cs" />
-    <Compile Include="Operations\ReadTextFileOperation.cs" />
-    <Compile Include="Operations\WriteTextFileOperation.cs" />
-    <Compile Include="PipelineBase.cs" />
+    <Compile Include="Annotations.cs" />
+    <Compile Include="Log.cs" />
+    <Compile Include="Maybe.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Operations\SqlQueryOperation.cs" />
-    <Compile Include="Row.cs" />
-    <Compile Include="TransformationForAttribute.cs" />
-    <Compile Include="Transformations.cs" />
+    <Compile Include="Requires.cs" />
+    <Compile Include="Runtime.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config">
-      <SubType>Designer</SubType>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Quantic.Common\Quantic.Common.csproj">
-      <Project>{6c9c09fe-3165-437b-9911-65a3a5f2b16f}</Project>
-      <Name>Quantic.Common</Name>
-    </ProjectReference>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

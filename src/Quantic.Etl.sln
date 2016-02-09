@@ -9,9 +9,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Quantic.Etl", "Quantic.Etl\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Quantic.Etl.Tests", "Quantic.Etl.Tests\Quantic.Etl.Tests.csproj", "{975E61FD-F01E-4064-83B3-1650866A1F23}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Quantic.Common", "..\..\Quantic.Common\src\Quantic.Common\Quantic.Common.csproj", "{CC101618-9CA2-40E3-80D1-0D7370113DD0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Quantic.Common", "Quantic.Common\Quantic.Common.csproj", "{6C9C09FE-3165-437B-9911-65A3A5F2B16F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Quantic.Common.Tests", "..\..\Quantic.Common\src\Quantic.Common.Tests\Quantic.Common.Tests.csproj", "{7CD6599C-6244-4930-95CB-63D8C7AE5080}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Quantic.Common.Tests", "Quantic.Common.Tests\Quantic.Common.Tests.csproj", "{26B89F3E-1A6F-45AC-B889-2A2BA375C81D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,20 +27,20 @@ Global
 		{975E61FD-F01E-4064-83B3-1650866A1F23}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{975E61FD-F01E-4064-83B3-1650866A1F23}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{975E61FD-F01E-4064-83B3-1650866A1F23}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CC101618-9CA2-40E3-80D1-0D7370113DD0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CC101618-9CA2-40E3-80D1-0D7370113DD0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CC101618-9CA2-40E3-80D1-0D7370113DD0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CC101618-9CA2-40E3-80D1-0D7370113DD0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7CD6599C-6244-4930-95CB-63D8C7AE5080}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7CD6599C-6244-4930-95CB-63D8C7AE5080}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7CD6599C-6244-4930-95CB-63D8C7AE5080}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7CD6599C-6244-4930-95CB-63D8C7AE5080}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C9C09FE-3165-437B-9911-65A3A5F2B16F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C9C09FE-3165-437B-9911-65A3A5F2B16F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C9C09FE-3165-437B-9911-65A3A5F2B16F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C9C09FE-3165-437B-9911-65A3A5F2B16F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{26B89F3E-1A6F-45AC-B889-2A2BA375C81D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26B89F3E-1A6F-45AC-B889-2A2BA375C81D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26B89F3E-1A6F-45AC-B889-2A2BA375C81D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26B89F3E-1A6F-45AC-B889-2A2BA375C81D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{975E61FD-F01E-4064-83B3-1650866A1F23} = {4C556D60-B124-4244-AB13-F4B1B2B36521}
-		{7CD6599C-6244-4930-95CB-63D8C7AE5080} = {4C556D60-B124-4244-AB13-F4B1B2B36521}
+		{26B89F3E-1A6F-45AC-B889-2A2BA375C81D} = {4C556D60-B124-4244-AB13-F4B1B2B36521}
 	EndGlobalSection
 EndGlobal

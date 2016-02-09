@@ -3,11 +3,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{975E61FD-F01E-4064-83B3-1650866A1F23}</ProjectGuid>
+    <ProjectGuid>{26B89F3E-1A6F-45AC-B889-2A2BA375C81D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Quantic.Etl.Tests</RootNamespace>
-    <AssemblyName>Quantic.Etl.Tests</AssemblyName>
+    <RootNamespace>Quantic.Common.Tests</RootNamespace>
+    <AssemblyName>Quantic.Common.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -45,7 +45,6 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Data" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -60,27 +59,20 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="DatabaseTests.cs" />
-    <Compile Include="ReadTextFileOperationTests.cs" />
-    <Compile Include="PipelineTests.cs" />
-    <Compile Include="RowTests.cs" />
+    <Compile Include="LogTests.cs" />
+    <Compile Include="MaybeTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TestRecords.cs" />
-    <Compile Include="TransformationsTests.cs" />
-    <Compile Include="WriteTextFileOperationTests.cs" />
+    <Compile Include="RequiresTests.cs" />
+    <Compile Include="RuntimeTests.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Quantic.Common\Quantic.Common.csproj">
       <Project>{6c9c09fe-3165-437b-9911-65a3a5f2b16f}</Project>
       <Name>Quantic.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Quantic.Etl\Quantic.Etl.csproj">
-      <Project>{660fae4b-b8b7-4eb1-969c-8d6d4ee71a2c}</Project>
-      <Name>Quantic.Etl</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
