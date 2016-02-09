@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,7 +13,8 @@ namespace Quantic.Etl.Tests
     [TestClass]
     public class ReadTextFileOperationTests
     {
-        private static string _fileLocation = @"C:\PeopleTable.txt";
+	    private static string _fileLocation = Path.Combine(
+		    Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "TestTable.txt");
 
         [TestInitialize]
         public void Setup()
