@@ -15,7 +15,7 @@ namespace Quantic.Common
 		/// <value>
 		///     The application path.
 		/// </value>
-		public static string ApplicationPath => Path.GetFullPath(Assembly.GetCallingAssembly().Location);
+		public static string ApplicationPath => Path.GetDirectoryName(Assembly.GetCallingAssembly().Location);
 
 		/// <summary>
 		///     Gets the version of the executing assembly.
